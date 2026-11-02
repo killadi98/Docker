@@ -1,0 +1,57 @@
+# Monolithic Vs Microservices
+# Monolithic is where all the services are deployed in a single server. Where as microservices is when all the services of the application are deployed in multiple servers.
+
+# Virtual Machine : It is a software based computer running its own OS and apps on actual physical computer or servers.  It is heavy, large and slightly slower to boot up, but offers high security and isolation. Hypervisor is toll which helps to create VMs
+
+# Containers share the host computer's OS kernel rather than running a full OS of theier own, making them lighter and faster, but less isolated. Docker is used to create containers.
+We can install docker on an EC2 instance and create containers.
+
+< Containerization >
+
+# Let's say an application runs in an environment like dev, but it fails in another environment. There can be multiple reasons for the failure like different system configurations, snv variables, APIs and dependencies. Containerization helps to overcome this issue. It is the process of packing the application along with its dependencies.
+
+# Docker creates images by packing the dependencies and the app together. These images can be run in any system environment to create containers. and the application runs within the container.
+
+| yum install docker -y | installs docker |
+
+| docker images | list of images avialable |
+
+| docker pull killadi98/first_repo:fisrt_image | pulls the mentioned image from dockerhub |
+
+| docker run -d --name cont-1 -p 1111:80 killadi98/first_repo:fisrt_image | creates a container using the image | -d is detached, which means the app can run in the background, -p is publish, which is to publish the host port and the containerPort |
+
+| docker ps | list of running containers |
+
+# if there is no image with the mentioned name locally,  the image will be downloaded from the docker hub
+
+| docker stop container-name | stops the container |
+
+| docker start container-name |
+
+| docker ps -a | list of all containers |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
