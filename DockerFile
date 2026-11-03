@@ -1,0 +1,103 @@
+---> Docker client: where we run the commands
+---> Docker Daemon or Docker host: where docker is installed
+---> Docker Registry : Dockerhub
+
+Dockerfile -> Build -> Image -> Run -> Container (App)
+
+# Dockerfile has a set of instructions which helps to containerize the applictaion by creating images.
+
+# Usual Components in the dockerfile:
+
+< FROM >
+
+# To define the base images. so that we dont nee to install the required programs like python for python applications. We can directly pull the official python image from dockerhub.
+
+Eg: FROM python or FROM sonarqube or FROM node or FROM mysql
+
+< EXPOSE >
+
+# To expose the container port. Usually the one who develops the image will know the container port. so to let other developers know we use expose. this is for documentation purpose. we can find this port by inspeecting the image.
+
+| docker run -d --name cont-name -p 1111:80 shaikmustafa/dm |
+
+< MAINTAINER >
+
+# to add author details. This too is for documentation purpose.
+
+< LABELS >
+
+# To add description about the image. This too is for documentation purpose.
+
+< COPY >
+
+# To copy the files from host to container.
+
+# Example docker file:
+
+FROM ubuntu
+EXPOSE 80
+MAINTAINER pavan
+LABEL this is my first image
+COPY app.py . ( To copy every file from the current directory to the conatiner, COPY .. |
+
+# .dockerignore to exclude files
+
+| docker build -t first-image . | to build an image with a tag |
+
+| docker run -itd --name cont1 first-image:latest | -it is for interactive terminal in the container |
+
+| docker exec -it cont1 bash |
+
+< ADD >
+
+# similar to copy component. To copy the files from host to container. Aditinally it supports urls. like files to download from the internet
+
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.123/bin/apache-tomcat-9.0.123-windows-x86.zip
+
+# The above add component will download the mentioned file
+
+# ADD component also extract the tar.gz files
+
+< WROKDIR >
+
+# To set a default path for the container. If not set the current directory will be "/"
+
+| WORKDIR /pavan/devops/ |
+
+# the above workdir component will create the dir in the container.
+
+# We can create images with the same name as existing images. But existing image will be overridden and will be in NONE state. and these images are called as dangling images.
+
+# We can give tags for this purpose. 
+
+| docker build -t first-image:v1 .  |
+
+< RUN >
+
+# To execute the commands. This ususally executes while creating an image.
+
+# RUN touch mydocker or RUN mkdir newdir or RUN apt update -y or RUN apt install git -y
+
+# RUN component can be used multiple times.
+
+< CMD >
+
+# To execute the commands. This component executes when the container is created. There cannot be multiple CMD commands.
+
+# Lets say we need to start a nodejs app with in the container, we have to run a command. for this purpose we use CMD component.
+
+< ENTRYPOINT >
+
+# To execute the commands. This component executes when the container is created. Differnece between CMD and ENTRYPOINT is 
+
+< ENV >
+
+# To pass any environment variables inside the containers
+
+# ENV course=devops ENV cloud=aws
+
+| printenv | to print env variables in a container |
+
+
+
+
