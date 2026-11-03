@@ -98,6 +98,19 @@ ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.123/bin/apache-tomcat-9.0.123-
 
 | printenv | to print env variables in a container |
 
+# Dockerfile for a static website for movie booking platform using nginx:
+
+FROM nginx
+MAINTAINER pavan
+LABEL this is a static claude generated movie ticktes platform
+EXPOSE 80
+COPY index.html /usr/share/nginx/html/
+
+
+
+
+
+
 
 
 
