@@ -1,1 +1,40 @@
 # Apache is another kind of web server similar to nginx. we use httpd for that.
+
+# Dockerfile using httpd:
+
+FROM httpd
+EXPOSE 80
+MAINTAINER pavan
+COPY index.html /usr/local/apache2/htdocs/
+
+# Java Project Structure:
+---> pom.xml has dependencies, versions, metada, descriptions etc
+---> src folder has actual app code
+
+# Python Project Structure:
+---> req.txt similar to pom.xml
+---> app.py has main app code
+Get the CODE
+install python & pip
+pip install -r req.txt
+pyhton app.py
+
+# Dockerfile for python:
+
+FROM python
+EXPOSE 8000
+WORKDIR /myapp
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD["python","app.py"]
+
+
+
+
+
+
+
+
+
+
