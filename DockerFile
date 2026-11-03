@@ -88,7 +88,14 @@ ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.123/bin/apache-tomcat-9.0.123-
 
 < ENTRYPOINT >
 
-# To execute the commands. This component executes when the container is created. Differnece between CMD and ENTRYPOINT is 
+# To execute the commands. This component executes when the container is created. Differnece between CMD and ENTRYPOINT is that ENTRYPOINT sets the command that always runs when the container starts. CMD sets the default command or arguments, which are easy to override.
+
+# using it together in the dockerfile:
+ENTRYPOINT ["python"]
+CMD ["app.py"] ( sets default argument )
+
+# If we want to override CMD, we can pass the argument in the CLI.
+# For eg: docker run python-image test.py ( test.py replaces app.py in CMD )
 
 < ENV >
 
