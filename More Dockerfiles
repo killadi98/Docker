@@ -38,8 +38,14 @@ RUN npm install
 COPY . .
 CMD ["npm","start"]
 
+# Dockerfile for Database:
 
+FROM mysql/mysql-server:5.7
+EXPOSE 3306
+COPY cricketers.sql /docker-entrypoint-initdb.d
+ENV MYSQL_ROOT_PASSWORD=admin12
 
+# we never mention secrets in the dockerfile. we use docker secret.
 
 
 
