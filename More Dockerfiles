@@ -47,6 +47,64 @@ ENV MYSQL_ROOT_PASSWORD=admin12
 
 # we never mention secrets in the dockerfile. we use docker secret.
 
+< Important points to follow while make dockerfiles >
+
+1. Use supported base images
+
+2. Prefer Alpine/slim/distroless where appropriate: To reduce image size by ignoring unwanted data or cache data. If the image size is large, container lifetime will decrease and crashes very soon
+
+3. Use multi-stage builds
+
+4. Don't run as root: to restrict access to root if there are any malicious attacks
+
+| RUN chown -R nginx:nginx /usr/share/nginx/html/ | nginx is present by default |
+
+| RUN chown -R nginx:nginx /usr/share/nginx/html/  USER nginx | change the login to nginx |
+
+5. No secrets in dockerfile
+6. Use .dockerignore
+7. Pin application dependencies
+8. No unnecessary packages
+9. Do not use latest versions in production: because latest tag will be assigned to the newer versions.
+10. Scan image with Trivy
+
+# To scan image with trivy. Install trivy.
+
+| trivy image image-name |
+
+FROM nginx:alpine
+RUN rm -rf /usr/share/nginx/html/*
+EXPOSE 80
+MAINTAINER pavan
+COPY index.html /usr/share/nginx/html/
+RUN chown -R nginx:nginx /usr/share/nginx/html/
+CMD ["nginx", "-g", "daemon off;"]
+
+FROM httpd:2.4-alpine
+RUN rm -rf /usr/local/alpine2/htdocs/*
+COPY index.html /usr/local/alpine2/htdocs
+EXPOSE 80
+RUN adduser -D new-user
+RUN chown -R new-user:new-user /usr/local/alpine2/htdocs
+USER new-user
+CMD ["httpd-foreground"]
+
+FROM node:22-alpine
+WORKDIR /myapp
+COPY package*.json ./
+RUN npm install --production
+COPY --chown=node:node . .
+USER node
+EXPOSE 80
+CMD ["node", "index.js"]
+
+
+
+
+
+
+
+
 
 
 
