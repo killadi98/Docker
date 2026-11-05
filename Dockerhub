@@ -2,11 +2,19 @@
 # CLoud based : Dockerhub, ECR(AWS), AZURE(ACR), GCR(GCP)
 # Local : Nexus, JFROG, DTRs
 
+to push the local image to dockerhub, the image name format should be:
 
+dockerhub-username/repo-name:tag
 
+| docker tag image1:html killadi98/statichtml-practice:v1 | command to change the image name |
 
+| docker login | login to dockerhub |
 
+| docker push killadi98/statichtml-practice:v1 | to push to dockerhub |
 
+| docker hub killadi98/statichtml-practice:v1 | to pull from dockerhub |
+
+| docker rmi image-name | to remove the images |
 
 
 
