@@ -1,0 +1,41 @@
+# Single stage docker files can be used for dev,test environments. But for production, we use multi stage.
+
+# We can use one stage for the dependencies (build stage) and the application runtime in another stage in a multi stage dockerfile
+
+The key idea: two separate, independent containers
+
+Think of each FROM as starting a brand new, empty computer. The two stages don’t share anything unless you explicitly copy files between them.
+
+Build phase needs heavy tools (compilers, package managers, dev dependencies). Run phase needs almost nothing. Multi-stage means: do phase 1 in a fat image, copy only the output into a thin image for phase 2.
+
+< Multi stage dockerfile for a Node app >
+
+FROM node:22-alpine as dependencies
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+
+FROM node:22-alpine as build
+WORKDIR /app
+COPY --from=dependencies /app/nod_modules ./node_modules
+COPY . .
+RUN npm run build
+
+FROM node:22-alpine as prod
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY --from=build ./app/dist ./dist
+EXPOSE 3000
+USER node
+CMD ["node", "dist/server.js"]
+
+
+
+
+
+
+
+
+
+
