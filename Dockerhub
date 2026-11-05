@@ -1,0 +1,16 @@
+# We use a registry to save and share the images
+# CLoud based : Dockerhub, ECR(AWS), AZURE(ACR), GCR(GCP)
+# Local : Nexus, JFROG, DTRs
+
+
+
+
+
+
+
+
+
+
+
+
+
