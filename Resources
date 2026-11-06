@@ -1,0 +1,52 @@
+# limits and reservations should be set for the containers to avoid OOM issues.
+  
+flight:
+    container_name: flight-cont
+    build: ./flight/
+    ports:
+      - "1113:80"
+    networks:
+      - network3
+    volumes:
+      - volume3:/flight-vol/
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.5"
+          memory: 100M
+        limits:
+          cpus: "1.0"
+          memory: 200M
+
+| docker stats |
+
+# monitoring helps to track the cpu usage to avoid hitting the limits
+
+< Depends on >
+
+# DB cont should start first before the app container starts.
+
+  backend:
+    container_name: app-cont
+    build: ./flight/
+    ports:
+      - "1113:80"
+    networks:
+      - network3
+    volumes:
+      - volume3:/flight-vol/
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.5"
+          memory: 100M
+        limits:
+          cpus: "1.0"
+          memory: 200M
+    depends_on:
+      - database
+
+# we can also hav multiple dependencies
+
+
+
