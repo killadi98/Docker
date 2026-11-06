@@ -92,8 +92,11 @@ services:
 
 | docker-compose build |
 
+# if we make any changes, the images of the respective files are created again and their containers will be created again 
 
+| docker-compose build |
 
+| docker-compose up -d |
 
 
 
