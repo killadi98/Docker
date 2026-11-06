@@ -55,7 +55,19 @@ local     mydata
 
 | docker volume | list of volume commands |
 
+# Host to container injecting: Host is where the docker is installed. the data within a path in the host will be replicated in the containers. this can work without creating any volumes. used in dev environments. lets say a git repo is pulled into the host. if we directly mount the path to the container, that code like front end pages is reflected in the containers and the app can be accessed from the browser. in future even if the code is changed, a pull request alone will reflect the changes in the containers too.
 
+[root@ip-172-31-5-94 ~]# ll
+total 0
+drwxr-xr-x. 2 root root 42 Nov  5 22:48 folder1
+drwxr-xr-x. 2 root root 24 Nov  5 22:40 multistage
+[root@ip-172-31-5-94 ~]# cd folder1
+[root@ip-172-31-5-94 folder1]# ll
+total 24
+-rw-r--r--. 1 root root   195 Nov  5 22:44 Dockerfile
+-rw-r--r--. 1 root root 18162 Nov  5 22:48 index.html
+
+| docker run -d --name cont-name -p 1111:80 -v $(pwd):/usr/share/nginx/html/ nginx |
 
 
 
