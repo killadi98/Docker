@@ -1,0 +1,63 @@
+# Cluster : a group of servers. Manager and worker servers.
+
+# Docker swarm is also an orchestration tool similar to k8s. it also has replication feature which helps us to run the required number of replicas in multiple servers.
+
+# Manager: we can have multiple manager servers
+-> add or delete workers
+-> services: create, delete, update and rollback
+
+# worker:
+-> run containers
+
+# Create multiple servers. connect to all of the servers and change their hostnames.
+
+| hostnamectl set-hostname "manager" |
+
+| hostnamectl set-hostname "worker-1" |
+
+| hostnamectl set-hostname "worker-2" |
+
+# install docker in every server
+
+| docker swarm init | creates a swarm with the current server as manager |
+
+[root@manager ~]# docker swarm init
+Swarm initialized: current node (vj5fk5hd11qhyj3wolpji7zsb) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-1ggbvo5g2i2czooho8scpz1cg7bwvrcebdziygfs8pncpsres1-4k0u9arzq30obkmlj71r130lh 172.31.42.177:2377
+
+
+# allow 2377 port for all the servers
+
+# go to the worker server and run docker swarm join --token SWMTKN-1-1ggbvo5g2i2czooho8scpz1cg7bwvrcebdziygfs8pncpsres1-4k0u9arzq30obkmlj71r130lh 172.31.42.177:2377
+
+| docker service create --name frontend --replicas 1 --publish 1111:80 killadi98/statichtml-practice:v1 | image should be from the dockerhub not the local images| because if the image is present in the local server all the containers will be created in that specific server and defeats the purpose of a cluster |
+
+| docker node ls |
+
+| docker service ls |
+
+| docker service ps frontend |
+
+# the app can be accessed from all the manager and worker nodes ( but the ports 7946, 4789 and 2377 should be allowed in the security groups )
+
+| docker service scale frontend=3 | to scale the replicas to 3 |
+
+| docker service rm frontend |
+
+| docker service update frontend --image=shaikmustafa/paytm:movie | to update any changes like the image |
+
+| docker service rollback frontend | to rollback to the previous version | we cannot rollback to a specific version |
+
+| docker service inspect frontend |
+
+| docker node rm worker | to remove the node from the cluster | but only after the status changes to down by going to the worker and leaving the swarm from the worker node | docker swarm leave |
+
+| docker swarm join-token worker | token for a node to join as a worker |
+
+| docker swarm join-token manager | token for a node to join as a manager | we can have multiple manager servers |
+
+
+
