@@ -12,7 +12,7 @@ dockerhub-username/repo-name:tag
 
 | docker push killadi98/statichtml-practice:v1 | to push to dockerhub |
 
-| docker hub killadi98/statichtml-practice:v1 | to pull from dockerhub |
+| docker pull killadi98/statichtml-practice:v1 | to pull from dockerhub |
 
 | docker rmi image-name | to remove the images |
 
