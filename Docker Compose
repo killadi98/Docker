@@ -1,0 +1,99 @@
+# Compose is a multi container tool. that is to create multiple containers at once.
+# Docker compose is a tool that is used to define and run multiple containers as a single application
+
+# install docker sompose
+
+sudo mkdir -p /usr/libexec/docker/cli-plugins
+sudo curl -SL "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+| docker-compose version |
+
+# executes through yaml files.
+
+< sample compose file >
+---
+services:
+  frontend:
+    container_name: fe-cont
+    image: nginx
+    ports:
+      - "1111:80"
+      
+  backend:
+    container_name: be-cont
+    image: httpd
+    ports:
+      - "1112:80"
+      
+  database:
+    container_name: db-cont
+    image: shaikmustafa/cycle
+    ports:
+      - "1113:80"
+
+| docker-compose up -d | to execute the compose file |
+
+| docker-compose down | to remove all the created resources |
+
+| docker-compose stop | to stop all the containers |
+
+| docker-compose start | to start all the containers |
+
+| docker-compose ps | to get all the containers that are created via compose file |
+
+| docker-compose images |
+
+| docker-compose config |
+
+| docker-compose pause | all the containers will be in paused state and they won't take any new requests |
+
+| docker-compose unpause |
+
+| docker-compose | list of commands |
+
+# do not give images names in the compose files. lets say in the dev environment, if we directly give the images, those images are pulled from the dockerhub. later if a chaneg happens in the code, those images need to be manually replaced in the compose file with the newer images. So instead we give the build paths. only the images that are changed will be rebuilt and the containers will be recreated.
+
+# install buildx
+
+mkdir -p ~/.docker/cli-plugins && \
+curl -SL https://github.com/docker/buildx/releases/download/v0.17.0/buildx-v0.17.0.linux-$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/') \
+-o ~/.docker/cli-plugins/docker-buildx && \
+chmod +x ~/.docker/cli-plugins/docker-buildx
+
+< compose file with build >
+
+---
+services:
+  bank:
+    container_name: bank-cont
+    build: ./bank/
+    ports:
+      - "1111:80"
+
+  bus:
+    container_name: bus-cont
+    build: ./bus/
+    ports:
+      - "1112:80"
+
+  flight:
+    container_name: flight-cont
+    build: ./flight/
+    ports:
+      - "1113:80"
+
+  train:
+    container_name: train-cont
+    build: ./train/
+    ports:
+      - "1114:80"
+
+| docker-compose build |
+
+
+
+
+
+
