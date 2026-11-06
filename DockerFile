@@ -105,6 +105,15 @@ CMD ["app.py"] ( sets default argument )
 
 | printenv | to print env variables in a container |
 
+But env values are not prferred to be in the dockerfile. since it will be specific to only to that environment.
+We create env files and pass them when creating the container at runtime. For instance if we need to work with APIs, these APIs will be different from one evn to another env. hence the same image from dev env can't be used in test env if we hard code the api in the env value of the image.
+dev-api : www.devapi.com
+test-api: www.test-api.com
+
+# create dev.env file with the details of the api
+
+| docker run -d --name cont-name -p 1114:80 -env-file=dev.env nginx |
+
 # Dockerfile for a static website for movie booking platform using nginx:
 
 FROM nginx
