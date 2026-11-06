@@ -1,0 +1,47 @@
+# docker containers usually communicate with each other: we dont want this because we cant have front end containers communicating with the database or payment containers.
+
+# bridge is the default network
+
+# we can check if the cont1 is communicating with cont2 using ping and the container IPs
+
+| apt update -y &&  apt install iputils-ping -y | to install ping package |
+
+| docker inspect cont-name |
+
+# all the containers we create are created in the bridge network. and when all the containers are on the same network, they communicate with each other. 
+
+| docker network ls | list of networks |
+
+# so we create a network for front-end containers, a network for BE and one for BD. thyen we connect the networks of FE and BE are connected and BE and DB networks are connected. Can be implemented via compose file.
+
+| docker network create database | to create a network for db |
+
+| docker run -itd --name cont1 --network database nginx | to create a container in the mentioned network |
+
+# we can attach entire network to a container
+
+| docker network connect bridge cont1 |
+
+| docker network connect bridge cont1 |
+
+# but we usually dont do this. we connect network to network via compose file 
+
+| docker rm network network-name | networks which doesn't have any containers will only be removed |
+
+| docker network | list of commands for network |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
