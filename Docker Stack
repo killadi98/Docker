@@ -1,0 +1,41 @@
+# Compose : Used to create multiple services on singlr host
+# Swarm : Used to create a service on multiple servers
+
+# Stack can be a combination of compose and swarm. Used to create multiple services on multiple hosts
+
+# Do not give the container name in the compose file because multiple replicas of the same service can be deployed on the same node and since container on the same node cannot have same names.
+
+< Compose file >
+---
+services:
+  service1:
+    image: killadi98/statichtml-practice:image1
+    ports:
+      - "1111:80"
+    deploy:
+      replicas: 3
+  service2:
+    image: chakalimurali/vehicles-sounds
+    ports:
+      - "1112:80"
+    deploy:
+      replicas: 3
+
+  service3:
+    image: vamsikrishnakakani/vamsi-repo:foodapp
+    ports:
+      - "1113:80"
+    deploy:
+      replicas: 3
+
+# docker stack deploy stack-name --compose-file=compose.yaml
+
+| docker stack ls |
+
+| docker service ls |
+
+| docker service ps cont-name |
+
+| docker stack ps stack-name |
+
+| docker stack rm stack-name |
