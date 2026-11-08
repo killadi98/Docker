@@ -1,6 +1,6 @@
 # Cluster : a group of servers. Manager and worker servers.
 
-# Docker swarm is also an orchestration tool similar to k8s. it also has replication feature which helps us to run the required number of replicas in multiple servers.
+# Docker swarm is also an orchestration tool similar to k8s. it also has replication feature which helps us to run the required number of replicas in multiple servers. even if one container crashes, it will create a new one.
 
 # Manager: we can have multiple manager servers
 -> add or delete workers
